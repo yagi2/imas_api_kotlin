@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url:  jdbc:postgresql://localhost/imas
+    username: yagi2
+    password: yagi2
+    driverClassName: org.postgresql.Driver
