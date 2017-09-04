@@ -8,3 +8,7 @@
 `$ psql -f SQL/init.sql -U <user>`  
 `$ psql -f SQL/<sql file> -U <user>`
 
+## 動かし方
+1. postgresqlを設定する
+2. ./gradlew bootRun する
+3. localhost:8080/swagger-ui.html でドキュメントがみれる  
