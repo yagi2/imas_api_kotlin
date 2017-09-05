@@ -17,6 +17,38 @@ class CharacterController {
     @RequestMapping(value = "/all", method = arrayOf(RequestMethod.GET))
     fun selectAll(): List<Character> = service.selectAll()
 
-    @RequestMapping(value = "/name", method = arrayOf(RequestMethod.GET))
-    fun findByName(@RequestParam("name") name: String): List<Character> = service.findByName(name)
+    @RequestMapping(value = "/search", method = arrayOf(RequestMethod.GET))
+    fun search(@RequestParam(value = "name",   required = false) name: String?,
+               @RequestParam(value = "cvName", required = false) cvName: String?,
+               @RequestParam(value = "age",    required =  false) age: Int?): List<Character> {
+
+        val redundantList = mutableListOf<MutableList<Character>>()
+
+        name?.let {
+            redundantList.add(mutableListOf())
+            redundantList[redundantList.size - 1].addAll(service.findByNameContains(name))
+        }
+
+        cvName?.let {
+            redundantList.add(mutableListOf())
+            redundantList[redundantList.size - 1].addAll(service.findByCvNameContains(cvName))
+        }
+
+        age?.let {
+            redundantList.add(mutableListOf())
+            redundantList[redundantList.size - 1].addAll(service.findByAge(age))
+        }
+
+        val result = mutableListOf<Character>()
+
+        redundantList.forEach {
+            it.forEach { character ->
+                if (redundantList.all { it.contains(character) } && result.contains(character).not()) {
+                    result.add(character)
+                }
+            }
+        }
+
+        return result
+    }
 }

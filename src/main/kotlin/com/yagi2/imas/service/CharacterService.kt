@@ -17,4 +17,10 @@ class CharacterService {
     fun selectAll(): List<Character> = repository.findAll(Sort(Sort.Direction.ASC, "id"))
 
     fun findByName(name: String): List<Character> = repository.findByName(name)
+    fun findByNameContains(name: String): List<Character> = repository.findByNameContainsOrderByIdAsc(name)
+
+    fun findByCvName(cvName: String): List<Character> = repository.findByCvName(cvName)
+    fun findByCvNameContains(cvName: String): List<Character> = repository.findByCvNameContainsOrderByIdAsc(cvName)
+
+    fun findByAge(age: Int): List<Character> = repository.findByAge(age)
 }
